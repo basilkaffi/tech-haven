@@ -1,0 +1,99 @@
+<template>
+  <div class="category-section">
+    <transition name="fade">
+      <div class="title" v-if="showTitle">Category</div>
+    </transition>
+    <transition name="category">
+      <div class="category-container" v-if="showCategory">
+        <CategoryCard
+          v-for="(category, i) in categories"
+          :key="i"
+          :category="category"
+        />
+      </div>
+    </transition>
+  </div>
+</template>
+
+<script>
+import CategoryCard from "./CategoryCard";
+export default {
+  name: "CategoryContainer",
+  components: {
+    CategoryCard,
+  },
+  data() {
+    return {
+      categories: ["car", "cpu", "gpu"],
+      showCategory: false,
+      showTitle: false
+    };
+  },
+  methods: {
+    handleScroll(event) {
+      window.pageYOffset > (window.innerHeight * 1) / 2
+        ? (this.showCategory = true)
+        : (this.showCategory = false);
+      window.pageYOffset > (window.innerHeight * 1) / 3
+        ? (this.showTitle = true)
+        : (this.showTitle = false);
+    },
+  },
+  created() {
+    window.addEventListener("scroll", this.handleScroll);
+  },
+  destroyed() {
+    window.removeEventListener("scroll", this.handleScroll);
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.category-section {
+  .title {
+    font-size: 2.5rem;
+    padding: 6rem 0 3rem 0;
+  }
+  .category-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin: auto;
+    width: 80rem;
+    height: 12rem;
+  }
+}
+
+.category-enter-active {
+  transition: all 500ms;
+}
+.category-leave-active {
+  transition: all 300ms;
+}
+.category-enter {
+  opacity: 0;
+}
+.category-enter {
+  transform: translateY(2rem);
+  opacity: 0;
+}
+.category-leave-to {
+  transform: translateY(2rem);
+  opacity: 1;
+}
+
+.fade-enter-active {
+  transition: all 500ms;
+}
+.fade-leave-active {
+  transition: all 500ms;
+}
+.fade-enter {
+  opacity: 0;
+}
+.fade-enter {
+  opacity: 0;
+}
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
