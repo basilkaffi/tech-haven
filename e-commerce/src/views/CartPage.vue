@@ -27,7 +27,7 @@
           <div class="label">Total Price:</div>
           <div class="amount">Rp. {{ formatPrice(totalPrice) }}</div>
         </div>
-        <button class="btn btn-secondary" @click.prevent="buy">Checkout</button>
+        <button class="btn btn-secondary" @click.prevent="buy">Purchase</button>
       </div>
     </div>
     <Footer />

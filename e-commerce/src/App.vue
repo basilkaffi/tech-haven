@@ -26,7 +26,6 @@ $fourth-color: #f5deb3;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  overflow-x: hidden;
 }
 body::-webkit-scrollbar {
   width: 0.5rem;

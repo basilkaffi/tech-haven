@@ -13,9 +13,9 @@
     </div>
     <div class="dropdown-content" v-else>
       <div class="dropdown-item button" @click.prevent="gotoRegister">
-        Register
+        <span>Register</span>
       </div>
-      <div class="dropdown-item button" @click.prevent="gotoLogin">Login</div>
+      <div class="dropdown-item button" @click.prevent="gotoLogin"><span>Login</span></div>
     </div>
   </div>
 </template>

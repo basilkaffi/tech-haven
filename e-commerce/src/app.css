@@ -1,0 +1,16 @@
+.loading {
+  box-sizing: border-box;
+  border: 16px solid darkslategray;
+  border-top: 16px solid gray;
+  border-radius: 50%;
+  width: 8rem;
+  height: 8rem;
+  animation: spin 2s linear infinite;
+  position: absolute;
+  left: 38%;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

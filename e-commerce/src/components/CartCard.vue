@@ -50,9 +50,15 @@
 </template>
 
 <script>
+import Swal from "sweetalert2";
 export default {
   name: "CartCard",
   props: ["item"],
+  data() {
+    return {
+      stockUpdated: true,
+    };
+  },
   computed: {
     products() {
       return this.$store.state.products;
@@ -71,17 +77,33 @@ export default {
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
     deleteItem() {
-      const itemIndex = this.products.findIndex((product) => {
-        return product.id == this.item.ProductId;
+      Swal.fire({
+        icon: "warning",
+        width: 500,
+        html: `<div style="color:#ffffff; font-size:1.5rem; font-family: 'Roboto Condensed', sans-serif;"">
+            Are You Sure Want To Delete This?</div>`,
+        background: "#2f4f4f",
+        showCancelButton: true,
+        confirmButtonColor: "#808080",
+        cancelButtonColor: "#232c2c",
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+      }).then((result) => {
+        if (result.value) {
+          const itemIndex = this.products.findIndex((product) => {
+            return product.id == this.item.ProductId;
+          });
+          let product = this.products[itemIndex];
+          product.stock = product.stock + this.item.Order;
+          this.$store.dispatch("updateStock", product);
+          product.stock = product.stock - this.item.Order;
+          this.$store.dispatch("deleteItem", this.item);
+        }
       });
-      let product = this.products[itemIndex];
-      product.stock = product.stock + this.item.Order;
-      this.$store.dispatch("updateStock", product);
-      product.stock = product.stock - this.item.Order;
-      this.$store.dispatch("deleteItem", this.item);
     },
     decrease() {
-      if (this.item.Order > 1) {
+      if (this.item.Order > 1 && this.stockUpdated) {
+        this.stockUpdated = false;
         this.item.Order--;
         const itemIndex = this.products.findIndex((product) => {
           return product.id == this.item.ProductId;
@@ -92,7 +114,9 @@ export default {
           id: this.item.id,
           order: this.item.Order,
         });
-        this.$store.dispatch("updateStock", product);
+        this.$store.dispatch("updateStock", product).then(() => {
+          this.stockUpdated = true;
+        });
       }
     },
     increase() {
@@ -100,14 +124,17 @@ export default {
         return product.id == this.item.ProductId;
       });
       let product = this.products[itemIndex];
-      if (product.stock > 0) {
+      if (product.stock > 0 && this.stockUpdated) {
+        this.stockUpdated = false;
         this.item.Order++;
         product.stock--;
         this.$store.dispatch("updateItem", {
           id: this.item.id,
           order: this.item.Order,
         });
-        this.$store.dispatch("updateStock", product);
+        this.$store.dispatch("updateStock", product).then(() => {
+          this.stockUpdated = true;
+        });
       }
     },
   },
@@ -115,8 +142,7 @@ export default {
 </script>
 
 <style lang="scss">
-
-$primary-font: 'Merriweather', serif;
+$primary-font: "Merriweather", serif;
 $secondary-font: "Roboto Condensed", sans-serif;
 
 .cart {
@@ -182,7 +208,7 @@ $secondary-font: "Roboto Condensed", sans-serif;
   width: 1.5rem;
   float: right;
   cursor: pointer;
-  transform: translate(-1.5rem,-0.5rem);
+  transform: translate(-1.5rem, -0.5rem);
   background-color: gray;
   border-radius: 100%;
   transition: 400ms;

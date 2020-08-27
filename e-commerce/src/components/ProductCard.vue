@@ -56,7 +56,9 @@ export default {
             this.$store.dispatch("updateItem", {
               id: this.items[itemIndex].id,
               order: this.items[itemIndex].Order + 1,
-            });
+            }).then((alert) => {
+              alert('Your Item Has Been Added To Your Cart')
+            })
           } else {
             this.$store.dispatch("createItem", {
               id: this.product.id,
@@ -71,6 +73,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 $primary-color: #2f4f4f;
 $secondary-color: #f5deb3;
 $third-color: #ffffff;
