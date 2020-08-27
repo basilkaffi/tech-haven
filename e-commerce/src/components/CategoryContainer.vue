@@ -24,19 +24,19 @@ export default {
   },
   data() {
     return {
-      categories: ["car", "cpu", "gpu"],
+      categories: ["cars", "cpu", "gpu"],
       showCategory: false,
       showTitle: false
     };
   },
   methods: {
     handleScroll(event) {
+      window.pageYOffset > (window.innerHeight * 2) / 5
+        ? (this.showTitle = true)
+        : (this.showTitle = false);
       window.pageYOffset > (window.innerHeight * 1) / 2
         ? (this.showCategory = true)
         : (this.showCategory = false);
-      window.pageYOffset > (window.innerHeight * 1) / 3
-        ? (this.showTitle = true)
-        : (this.showTitle = false);
     },
   },
   created() {
@@ -49,9 +49,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+$primary-color: #2f4f4f;
+$secondary-color: #f5deb3;
+$third-color: #ffffff;
+$fourth-color: #808080;
+
+// $primary-color: #ffffff;
+// $secondary-color: #5bc0de;
+// $third-color: #146e8a;
+// $fourth-color: #f5deb3;
+
+$primary-font: 'Merriweather', serif;
+$secondary-font: "Roboto Condensed", sans-serif;
+
 .category-section {
+  color: $primary-color;
+  font-family: $primary-font;
   .title {
-    font-size: 2.5rem;
+    font-size: 3rem;
     padding: 6rem 0 3rem 0;
   }
   .category-container {

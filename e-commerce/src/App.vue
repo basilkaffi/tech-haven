@@ -15,6 +15,12 @@ export default {
 </script>
 
 <style lang="scss">
+
+$primary-color: #ffffff;
+$secondary-color: #5bc0de;
+$third-color: #146e8a;
+$fourth-color: #f5deb3;
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -26,9 +32,9 @@ body::-webkit-scrollbar {
   width: 0.5rem;
 }
 body::-webkit-scrollbar-track {
-  background-color: gray;
+  background-color: $fourth-color;
 }
 body::-webkit-scrollbar-thumb {
-  background-color: darkslategray;
+  background-color: $secondary-color;
 }
 </style>

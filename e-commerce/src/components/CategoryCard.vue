@@ -1,6 +1,6 @@
 <template>
   <div class="card-container" :style="cssProps">
-    <div class="title">
+    <div class="title" @click.prevent="gotoCategory">
       {{ category.toUpperCase() }}
     </div>
   </div>
@@ -18,10 +18,21 @@ export default {
       };
     },
   },
+  methods: {
+    gotoCategory() {
+      this.$router.push({
+        name: "Category",
+        params: { category: this.category },
+      });
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
+$primary-font: "Merriweather", serif;
+$secondary-font: "Roboto Condensed", sans-serif;
+
 .card-container {
   width: 95%;
   height: 100%;
@@ -36,6 +47,7 @@ export default {
     left: 50%;
     transform: translate(-50%, -50%);
     color: white;
+    font-family: $secondary-font;
     font-size: 3rem;
     font-weight: 500;
     width: fit-content;

@@ -106,11 +106,12 @@ export default new Vuex.Store({
     },
     
     updateStock(context, payload) {
+      const stock = payload.stock - 1
       axios({
         method: 'patch',
         url: `${context.state.url}/products/${payload.id}`,
         data: {
-          stock: payload.stock
+          stock: stock
         },
         headers: {
           access_token: localStorage.access_token
@@ -138,6 +139,9 @@ export default new Vuex.Store({
       })
       .then(response => {
         console.log(response.data)
+        const currentItems = context.state.cartItems
+        const newItems = currentItems.concat(response.data)
+        context.commit('setCartItems', newItems)
       })
       .catch(err => {
         console.log(err.response || err)
@@ -153,7 +157,7 @@ export default new Vuex.Store({
         }
       })
       .then(response => {
-        console.log(response.data)
+        console.log(response.data, 'get items')
         context.commit('setCartItems', response.data.items)
       })
       .catch(err => {

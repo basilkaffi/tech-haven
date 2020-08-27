@@ -4,11 +4,12 @@
     <vueper-slides
       autoplay
       ref="myVueperSlides"
+      :arrows="false"
       :parallax="parallax"
       :parallax-fixed-content="parallaxFixedContent"
       :touchable="false"
-      :duration=3000
-      :fixedHeight="'90vh'"
+      :duration=2000
+      :fixedHeight="'35rem'"
       style="z-index: 1;"
     >
       <vueper-slide
@@ -44,6 +45,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-</style>
